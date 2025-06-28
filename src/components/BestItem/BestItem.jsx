@@ -1,36 +1,20 @@
+import useItem from '../../hooks/useItem'
 import ItemCard from '../itemCard/ItemCard'
-// import items from '../../constans/items'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+
+import LoadingScreen from '../LoadingScreen/LoadingScreen'
 
 const BestItem = () => {
-  const [Items, setItems] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
 
-  useEffect(() => {
-    const getItems = async () => {
-      try {
-        const res = await axios.get(`https://true-fit-dz-api.vercel.app/item`)
-        setItems(res.data.result)
-      } catch (error) {
-        setError("حدث خطأ أثناء تحميل المنتجات.")
-        console.log(error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    getItems()
-  }, [])
+  const { Items, Loading, Error } = useItem()
 
 
 
-  if (loading) {
-    return <div className="text-center text-lg mt-5">جارٍ تحميل المنتجات...</div>
+  if (Loading) {
+    return <LoadingScreen />
   }
 
-  if (error) {
-    return <div className="text-center text-red-500 mt-5">{error}</div>
+  if (Error) {
+    return <div className="text-center text-red-500 mt-5">error</div>
   }
 
   if (Items.length === 0) {
@@ -43,7 +27,7 @@ const BestItem = () => {
   // const mybestItems = items.filter(e => e.best).map((e, i) => <ItemCard key={i} item={e} />)
 
   return (
-    <div className="w-full flex flex-wrap justify-evenly mt-3 items-center">
+    <div className="w-full grid grid-cols-2 md:grid-cols-4 flex-wrap justify-evenly mt-3 items-center">
       {myBestItems}
     </div>
   )

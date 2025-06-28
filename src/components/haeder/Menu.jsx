@@ -31,12 +31,12 @@ const Menu = () => {
                             animate={{ y: 0 }}
                             exit={{ y: 1000 }}
                             transition={{ duration: 0.5, type: 'spring' }}
-                            className='z-[200] h-[85%] flex px-5 a relative flex-col items-center overflow-hidden overflow-y-scroll w-full sm:rounded-2xl md:h-full rounded-t-3xl  md:rounded-none  sm:w-[500px] md:w-[400px] bg-white'
+                            className='z-[200] h-[75%] flex px-5 a relative flex-col items-center overflow-hidden overflow-y-scroll w-full sm:rounded-2xl md:h-full rounded-t-3xl  md:rounded-none  sm:w-[500px] md:w-[400px] bg-white'
                             onClick={(e) => e.stopPropagation()}  // Prevents the event from propagating to the parent div
                         >
                             <span
                                 onClick={hide}
-                                className='md:hidden absolute top-5 right-5'
+                                className='md:hidden absolute top-5 left-5'
                             >
                                 <IoMdClose size={30} />
                             </span>

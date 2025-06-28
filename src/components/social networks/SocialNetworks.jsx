@@ -1,13 +1,16 @@
 import React from 'react'
 import { FaFacebook } from "react-icons/fa6";
+import getData from '../../constans/getData';
 const SocialNetworks = ({ page }) => {
+  const { facebook, instgarm, tiktok } = getData; // ← ensure you invoke it if it's a function
+
   return (
     <div
       className={`flex ${!page && "justify-center"} w-full py-2 mb-5`}
     >
       <a
         className={`${page ? "mx-1" : "mx-3"}`}
-        href='https://web.facebook.com'
+        href={facebook}
         target='_blank'
       >
         <FaFacebook
@@ -17,7 +20,7 @@ const SocialNetworks = ({ page }) => {
       </a>
       <a
         className={`${page ? "mx-1" : "mx-3"}`}
-        href='https://web.facebook.com'
+        href={instgarm}
         target='_blank'
       >
         <img
@@ -30,7 +33,7 @@ const SocialNetworks = ({ page }) => {
       </a>
       <a
         className={`${page ? "mx-1" : "mx-3"}`}
-        href='https://web.facebook.com'
+        href={tiktok}
         target='_blank'
       >
         <img

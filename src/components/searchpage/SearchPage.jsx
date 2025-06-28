@@ -1,13 +1,15 @@
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import ItemCard from '../itemCard/ItemCard'
 import { useSearchParams } from 'react-router-dom'
-import items from '../../constans/items'
+import useItem from '../../hooks/useItem'
+import LoadingScreen from '../LoadingScreen/LoadingScreen'
 
 const SearchPageContent = () => {
+  const { Error, Items, Loading } = useItem()
   const [search] = useSearchParams()
   const searchTerm = search.get("search")?.toUpperCase().replace(" ", "") || ""
-
-  const searchItems = items.filter(e => e.name.toUpperCase().replace(" ", "").includes(searchTerm))
+  if (Loading) return <LoadingScreen />
+  const searchItems = Items.filter(e => e.name.toUpperCase().replace(" ", "").includes(searchTerm))
     .map(e => <ItemCard item={e} key={e.name} />)
 
   return (

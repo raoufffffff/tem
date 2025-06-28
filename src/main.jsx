@@ -11,6 +11,8 @@ import Faq from './pages/Faq.jsx';
 import Commande from './pages/Commande.jsx';
 import Item from './pages/Item.jsx';
 import SearchPage from './components/searchpage/SearchPage.jsx';
+import Thanks from './pages/Thanks.jsx';
+import Livraison from './pages/Livraison.jsx';
 
 
 
@@ -26,6 +28,8 @@ const router = createBrowserRouter(
       <Route path='commande' element={<Commande />} />
       <Route path='item/:id' element={<Item />} />
       <Route path='search' element={<SearchPage />} />
+      <Route path='thanks' element={<Thanks />} />
+      <Route path='livraison' element={<Livraison />} />
     </Route>
   )
 );

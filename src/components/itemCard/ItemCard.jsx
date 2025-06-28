@@ -1,40 +1,66 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import getData from "../../constans/getData";
+import { useState } from "react";
 
 const ItemCard = ({ item }) => {
+  const [isHoverg, setisHoverg] = useState(false)
+  const { main_color } = getData
   return (
-    <article
-      initial={{ opacity: 0 }}
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, type: "spring" }}
-      animate={{ opacity: 1 }}
-      className='w-5/12 md:w-3/12 mx-2 overflow-hidden my-2 '
+      className=" mx-1 overflow-hidden my-4 rounded-xl shadow-xl"
+      onMouseEnter={() => setisHoverg(true)}
+      onMouseLeave={() => setisHoverg(false)}
     >
       <Link
         to={`/item/${item._id}`}
-        className='flex flex-col items-center justify-center'
+        className="flex flex-col items-center justify-center px-2 py-4 space-y-3"
       >
-        <div
-          className=' item-img rounded-xl w-full'
-        >
+        {/* صورة المنتج */}
+        <div className="rounded-xl w-full overflow-hidden shadow-inner">
           <img
             src={item.imgs[0]}
             alt={item.name}
-            width={300}
-            height={300}
-            className='w-full  mb-2 min-w[300px] min-h-[150px] max-h-[150px] md:min-h-[250px] md:max-h-[250px] hover:scale-110 transition-all'
+
+            className="w-full mb-2 h-[150px] transition-transform duration-300 ease-in-out hover:scale-105"
           />
         </div>
-        <p
-          className='px-4 text-center one-line'
-        >{item.name}</p>
-        <span
-          className='flex text-center my-2 font-semibold'
-        >{item.price} DA</span>
-        <div
-          className='w-[90%] mt-2 uppercase font-semibold hover:text-white hover:bg-black rounded-xl border border-black text-center py-2 mx-auto'
-        >commander</div>
-      </Link>
-    </article>
-  )
-}
 
-export default ItemCard
+        {/* اسم المنتج */}
+        <p className="text-center text-sm text-gray-600 font-semibold truncate w-full">
+          {item.name}
+        </p>
+
+        {/* السعر */}
+        <span className="text-center  text-lg font-bold">
+          {item.price} دج
+        </span>
+
+        {/* زر الطلب */}
+        <div
+
+          style={
+            isHoverg ?
+              {
+                background: main_color,
+                border: `1px solid ${main_color}`,
+                color: "#fff",
+              }
+              : {
+                border: `1px solid ${main_color}`,
+                color: main_color,
+              }
+          }
+
+          className="w-[90%] mt-2  uppercase font-bold text-sm  text-center py-2 rounded-xl ">
+          اطلب الآن
+        </div>
+      </Link>
+    </motion.article>
+  );
+};
+
+export default ItemCard;

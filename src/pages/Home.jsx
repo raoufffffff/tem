@@ -7,23 +7,17 @@ export default function Home() {
             className="w-full px-5 my-2"
         >
 
-            <section
-                className="w-full my-5"
-            >
-                <h1
-                    className="text-xl font-bold md:text-2xl"
-                >Découvrez nos catégories de produits !</h1>
-                <Categories />
-            </section>
+
+            <Categories />
             <section
                 className="w-full my-5"
             >
                 <h2
                     className="text-xl font-bold md:text-2xl"
-                >Meilleurs produits</h2>
+                >أفضل المنتجات</h2>
                 <p
                     className="text-sm"
-                >Découvrez les meilleurs produits aux meilleurs prix 🔥</p>
+                >اكتشف أفضل المنتجات بأفضل الأسعار 🔥</p>
                 <BestItem />
             </section>
         </div>

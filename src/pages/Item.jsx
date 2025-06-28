@@ -2,10 +2,9 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ReactPixel from 'react-facebook-pixel';
-
-import Avis from "../components/item/avis/Avis";
 import ItemForm from "../components/item/itemform/ItemForm";
 import ItemImages from "../components/item/itemimgs/ItemImages";
+import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 
 // Prevent Pixel re-initialization on every route change
 let pixelInitialized = false;
@@ -51,29 +50,35 @@ const Item = () => {
         getItem();
     }, [id]);
 
-    if (loading) return <h1>Loading...</h1>;
+    if (loading) return <LoadingScreen />;
 
     return (
         <div className="w-full px-5 mb-5 overflow-hidden">
             <div className="flex flex-col min-h-screen md:items-end relative">
-                <div className="w-full md:w-6/12">
+                <div className="w-full  ">
                     <h1 className="my-3 font-bold capitalize text-lg md:text-2xl">
                         {item.name}
                     </h1>
-                    <p className="text-[#0007] font-[500] text-sm">{item.des}</p>
+
                     <h2 className="text-[#ef4444] font-bold my-2 text-xl">
                         {item.price} DA
                     </h2>
                 </div>
+                <div
+                    className="flex flex-row-reverse flex-wrap"
+                >
 
-                {/* Images Section */}
-                <div className="w-full md:w-6/12 md:h-fit md:absolute top-0 left-0 overflow-hidden">
-                    <ItemImages imgs={item.imgs} />
-                </div>
+                    {/* Images Section */}
+                    <div className="w-full sm:w-7/12   overflow-hidden">
+                        <ItemImages imgs={item.imgs} />
+                    </div>
 
-                {/* Form Section */}
-                <div className="w-full md:w-6/12 mt-5">
-                    <ItemForm price={item.price} />
+                    {/* Form Section */}
+                    <div className="w-full sm:w-5/12">
+                        <ItemForm item={item} />
+
+                    </div>
+                    <p className="text-[#000a] text-center font-[500] text-sm mt-10">{item.sTitel}</p>
                 </div>
             </div>
 

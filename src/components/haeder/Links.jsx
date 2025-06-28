@@ -1,5 +1,6 @@
 import SocialNetworks from '../social networks/SocialNetworks';
 import { Link, useLocation } from 'react-router-dom';
+import MinCategories from './MinCategories';
 
 const Links = ({ hide }) => {
     const router = useLocation()
@@ -36,6 +37,10 @@ const Links = ({ hide }) => {
             className='flex flex-col items-start w-full px-2 mt-5   '
         >
             {mylinks}
+            <div
+                className='border-b border-b-[#3a3b3b55] w-full my-2 '
+            ></div>
+            <MinCategories hide={hide} />
 
             <div
                 className='border-b border-b-[#3a3b3b55] w-full my-2 '
