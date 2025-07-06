@@ -10,7 +10,7 @@ const CategoriCard = ({ e, home }) => {
                 border: `1px solid ${main_color}`,
                 color: main_color,
             }}
-            className={`${home ? "min-w-[60%] max-h-[200px] sm:min-w-[40%] md:min-w-[23%] md:max-w-[23%] " : "w-[45%] sm:w-[31%] md:w-[23%] my-2 mx-2"} bg-[#0004]  mx-2 rounded-xl overflow-hidden relative `}
+            className={`${home ? "min-w-[60%] max-h-[200px] sm:min-w-[40%] md:min-w-[23%] md:max-w-[23%] " : "w-[45%] sm:w-[31%] md:w-[23%] my-2 mx-2"} bg-white  mx-2 rounded-xl overflow-hidden relative `}
             key={e.name}
             to={`/categories/${e.name}`}>
             <img

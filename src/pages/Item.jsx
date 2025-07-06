@@ -1,56 +1,47 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import ReactPixel from 'react-facebook-pixel';
 import ItemForm from "../components/item/itemform/ItemForm";
 import ItemImages from "../components/item/itemimgs/ItemImages";
-import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
-
+import items from '../item.json'
 // Prevent Pixel re-initialization on every route change
 let pixelInitialized = false;
 
 const Item = () => {
     const { id } = useParams();
-    const [item, setItem] = useState(null);
-    const [loading, setLoading] = useState(true);
-
+    const item = items.find(e => e._id === id)
     useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
         const getItem = async () => {
-            try {
-                const res = await axios.get(`https://true-fit-dz-api.vercel.app/item/${id}`);
-                if (res.data.good) {
-                    const data = res.data.result;
-                    setItem(data);
-                    setLoading(false);
 
-                    // Initialize Pixel only once
-                    if (data.Fpixal && !pixelInitialized) {
-                        ReactPixel.init(data.Fpixal, {}, { debug: false }); // debug: true for testing
-                        pixelInitialized = true;
-                    }
 
-                    // Always send a page view and ViewContent event
-                    if (data.Fpixal) {
-                        ReactPixel.pageView();
-                        ReactPixel.track('ViewContent', {
-                            content_name: data.name,
-                            content_ids: [data._id],
-                            content_type: 'product',
-                            value: data.price,
-                            currency: 'DZD',
-                        });
-                    }
-                }
-            } catch (err) {
-                console.error("Failed to fetch item:", err);
-                setLoading(false);
+            // Initialize Pixel only once
+            if (item.Fpixal && !pixelInitialized) {
+                ReactPixel.init(item.Fpixal, {}, { debug: false }); // debug: true for testing
+                pixelInitialized = true;
             }
-        };
+
+            // Always send a page view and ViewContent event
+            if (item.Fpixal) {
+                ReactPixel.pageView();
+                ReactPixel.track('ViewContent', {
+                    content_name: item.name,
+                    content_ids: [item._id],
+                    content_type: 'product',
+                    value: item.price,
+                    currency: 'DZD',
+                });
+            }
+        }
+
+
 
         getItem();
     }, [id]);
 
-    if (loading) return <LoadingScreen />;
 
     return (
         <div className="w-full px-5 mb-5 overflow-hidden">
@@ -82,8 +73,7 @@ const Item = () => {
                 </div>
             </div>
 
-            {/* Optional: Reviews Component */}
-            {/* <Avis /> */}
+
         </div>
     );
 };

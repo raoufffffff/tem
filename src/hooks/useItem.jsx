@@ -13,7 +13,6 @@ const useItem = () => {
                 const res = await axios.get(`https://true-fit-dz-api.vercel.app/item/my/${id}`)
                 let result = res.data.result.filter(e => e.best)
                 setItems(result)
-
             } catch {
                 setError(true)
             } finally {

@@ -1,28 +1,12 @@
-import useUser from "../../hooks/useUser"
 import CategoriCard from "../categoriCard/CategoriCard"
-
+import categories from '../../categories.json'
 
 
 const Categories = () => {
-  const { Loading, UserCategories } = useUser()
-  const mycat = UserCategories.map(e => <CategoriCard key={e.name} home e={e} />
+  const mycat = categories.map(e => <CategoriCard key={e.name} home e={e} />
   )
-  if (Loading) return (
-    <section className="w-full my-5 animate-pulse">
-      <h1 className="text-xl font-bold md:text-2xl bg-gray-300 rounded w-40 h-6 mb-4"></h1>
 
-      <div className="w-full flex overflow-x-scroll md:overflow-hidden gap-4 mt-5">
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="min-w-[150px] h-40 bg-gray-300 rounded-lg"
-          ></div>
-        ))}
-      </div>
-    </section>
-
-  )
-  if (UserCategories.length == 0) return
+  if (categories.length == 0) return
   return (
     <section
       className="w-full my-5"

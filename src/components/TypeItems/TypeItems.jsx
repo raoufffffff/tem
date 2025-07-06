@@ -1,10 +1,7 @@
+import Items from '../../item.json'
 import ItemCard from '../itemCard/ItemCard'
-import useItem from '../../hooks/useItem'
-import LoadingScreen from '../LoadingScreen/LoadingScreen'
 const TypeItems = ({ name }) => {
-  const { Items, Loading } = useItem()
-  const FiltterItem = Items.filter(e => e.type === name)
-  if (Loading) return <LoadingScreen />
+  const FiltterItem = Items.filter(e => e.type === name).filter(e => e.best)
   if (FiltterItem.length == 0) {
     return <p
       className='text-center mt-7 mb-52 capitalize text-[#0007] text-xl'
