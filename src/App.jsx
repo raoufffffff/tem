@@ -1,14 +1,16 @@
-import { Outlet } from 'react-router-dom'
-import Header from './components/haeder/Header'
-import Footer from './components/footer/Footer'
+import { Outlet } from "react-router-dom"
+import Header from "./compunent/header/Header"
+
 
 function App() {
 
   return (
-    <div dir='rtl'>
+    <div
+      className="min-h-screen w-full pt-[100px] md:px-10 pb-11"
+    >
+
       <Header />
       <Outlet />
-      <Footer />
     </div>
   )
 }

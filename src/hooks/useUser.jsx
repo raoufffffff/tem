@@ -1,28 +1,100 @@
-import React, { useEffect, useState } from 'react'
-import getData from '../constans/getData'
-import axios from 'axios'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const useUser = () => {
-    const { id } = getData
-    const [UserCategories, setUserCategories] = useState([])
-    const [Loading, setLoading] = useState(true)
-    const [Error, setError] = useState(false)
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const res = await axios.get(`https://true-fit-dz-api.vercel.app/user/${id}`)
-                setUserCategories(res.data.result.Categories)
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const fetchUser = async () => {
+        try {
+            const localUser = localStorage.getItem("user");
+            if (!localUser) throw new Error("User not found in localStorage");
 
-            } catch {
-                setError(true)
-            } finally {
-                setLoading(false)
-            }
+            const userId = JSON.parse(localUser)._id;
+            const res = await axios.get(`https://true-fit-dz-api.vercel.app/user/${userId}`);
+            setUser(res.data.result);
+        } catch (err) {
+            setError(err.response?.data?.message || err.message || "Failed to fetch user");
+        } finally {
+            setLoading(false);
         }
-        fetchUser()
-    }, [])
+    };
+    useEffect(() => {
 
-    return { UserCategories, Loading, Error }
-}
 
-export default useUser
+        fetchUser();
+    }, []);
+    const setNotificationsToDefult = async () => {
+        try {
+            const localUser = localStorage.getItem("user");
+            if (!localUser) throw new Error("User not found in localStorage");
+
+            const userId = JSON.parse(localUser)._id;
+            await axios.put(`https://true-fit-dz-api.vercel.app/user/${userId}`,
+                {
+                    AlartNotification: false,
+                    NotificationsCurrentNumber: 0
+                }
+            ).then(() => {
+                fetchUser()
+            })
+        } catch (error) {
+            setError(error.response?.data?.message || error.message || "Failed to fetch user");
+        }
+    }
+
+    const handleUpdateCategory = async (nerCategories, repo) => {
+        setLoading(true)
+        try {
+            const localUser = localStorage.getItem("user");
+            if (!localUser) throw new Error("User not found in localStorage");
+
+            const userId = JSON.parse(localUser)._id;
+            await axios.put(`https://next-website-server.vercel.app/update-Category`,
+                {
+                    id: userId,
+                    Categories: nerCategories,
+                    name: repo
+                }
+            ).then(() => {
+                fetchUser()
+            })
+        } catch (error) {
+            setError(error.response?.data?.message || error.message || "Failed to fetch user");
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    let {
+        _id = '',
+        Categories = [],
+        website = {},
+        name = '',
+        email = '',
+        phone = '',
+        type = '',
+        Notifications = [],
+        AlartNotification = false,
+        NotificationsCurrentNumber = 0,
+    } = user || {};
+
+    return {
+        Categories,
+        _id,
+        name,
+        email,
+        phone,
+        type,
+        Notifications,
+        AlartNotification,
+        NotificationsCurrentNumber,
+        loading,
+        error,
+        setNotificationsToDefult,
+        handleUpdateCategory,
+        website
+    };
+};
+
+export default useUser;
