@@ -1,5 +1,5 @@
 // ItemForm.jsx
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import states from "../../../constans/states";
@@ -30,6 +30,21 @@ const ItemForm = ({ item }) => {
         price: item.price,
         home: true,
     });
+    const [scrollY, setScrollY] = useState(window.scrollY);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+
+        // Add scroll listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Cleanup on unmount
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     const scrollToForm = () => {
         formRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -102,7 +117,7 @@ const ItemForm = ({ item }) => {
 
     return (
         <>
-            <div ref={formRef} className="mx-auto w-full sm:w-11/12 mt-10 rounded-lg border-2 p-6 font-[Cairo] text-right" style={{ borderColor: main_color }}>
+            <div ref={formRef} className="mx-auto w-full sm:w-full mt-10 rounded-lg border-2 p-5 font-[Cairo] text-right" style={{ borderColor: main_color }}>
                 <h2 className="text-center font-bold" style={{ color: main_color }}>
                     املأ النموذج لإتمام الطلب
                 </h2>
@@ -225,13 +240,13 @@ const ItemForm = ({ item }) => {
                 </button>
             </div>
 
-            <button
+            {(scrollY < 300 || scrollY > 800) && <button
                 onClick={scrollToForm}
                 className="fixed bottom-4 right-4 left-4 md:right-10 md:left-auto font-bold py-3 px-6 rounded-xl text-white z-40"
                 style={{ backgroundColor: main_color }}
             >
                 اشترِ الآن
-            </button>
+            </button>}
         </>
     );
 };

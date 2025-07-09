@@ -44,28 +44,28 @@ const Item = () => {
 
 
     return (
-        <div className="w-full px-5 mb-5 overflow-hidden">
-            <div className="flex flex-col min-h-screen md:items-end relative">
-                <div className="w-full  ">
-                    <h1 className="my-3 font-bold capitalize text-lg md:text-2xl">
-                        {item.name}
-                    </h1>
+        <div className="w-full  mb-5 overflow-hidden">
+            <div className="flex  min-h-screen w-full justify-center">
 
-                    <h2 className="text-[#ef4444] font-bold my-2 text-xl">
-                        {item.price} DA
-                    </h2>
-                </div>
                 <div
-                    className="flex flex-row-reverse flex-wrap"
+                    className="flex flex-col "
                 >
+                    <div className="w-full px-5 ">
+                        <h1 className="my-3  font-bold capitalize text-lg md:text-2xl">
+                            {item.name}
+                        </h1>
 
+                        <h2 className="text-[#ef4444] font-bold my-2 text-xl">
+                            {item.price} DA
+                        </h2>
+                    </div>
                     {/* Images Section */}
-                    <div className="w-full sm:w-7/12   overflow-hidden">
+                    <div className=" w-full sm:w-6/12   overflow-hidden mx-auto px-5">
                         <ItemImages imgs={item.imgs} />
                     </div>
 
                     {/* Form Section */}
-                    <div className="w-full sm:w-5/12">
+                    <div className=" w-11/12 sm:w-9/12   overflow-hidden mx-auto">
                         <ItemForm item={item} />
 
                     </div>

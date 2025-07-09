@@ -7,7 +7,7 @@ const BestItem = () => {
 
 
   if (Items.length === 0) {
-    return <div className="text-center text-gray-500 mt-5">لا توجد منتجات متاحة حالياً.</div>
+    return <div className="text-center text-gray-500 mt-16 mb-36">لا توجد منتجات متاحة حالياً.</div>
   }
 
   const myBestItems = Items.filter(e => e.best).map((e, i) => (

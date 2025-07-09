@@ -1,27 +1,28 @@
 import { Link } from "react-router-dom"
-import useUser from "../../hooks/useUser"
+import categories from '../../categories.json'
 
 const MinCategories = ({ hide }) => {
-    const { Loading, UserCategories } = useUser()
-    if (Loading) return <h1>تحميل ....</h1>
-    if (UserCategories.length == 0) return
+
+    if (categories.length == 0) return
     return (
-        <div>
+        <div
+            className="w-full"
+        >
             <strong>تصنيفات المتجر</strong>
             <div
-                className="flex flex-wrap items-center justify-around"
+                className="flex w-full flex-wrap items-center justify-between"
             >
 
-                {UserCategories.map(e => (
+                {categories.map(e => (
                     <Link
-                        className="flex w-6/12 my-1.5"
+                        className="flex capitalize justify-center  font-bold w-6/12 my-1.5"
                         to={`/categories/${e.name}`}
                         onClick={hide}
                     >
                         {e.name}
-
                     </Link>
                 ))}
+
             </div>
         </div>
     )

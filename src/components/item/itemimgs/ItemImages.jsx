@@ -52,7 +52,7 @@ const ItemImages = ({ imgs }) => {
       </div>
 
       {/* الصور المصغّرة */}
-      <div className="w-full flex flex-wrap justify-center mt-2">
+      <div className="w-full flex flex-wrap justify-end mt-2">
         {imgs.map((e, i) => (
           <span
             key={i}

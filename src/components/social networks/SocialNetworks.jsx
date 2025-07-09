@@ -24,7 +24,7 @@ const SocialNetworks = ({ page }) => {
         target='_blank'
       >
         <img
-          src={'/ins.png'}
+          src={'https://raouf-dznm.vercel.app/ins.png'}
           width={page ? 30 : 40}
           height={page ? 30 : 40}
           alt='instgram'
@@ -37,7 +37,7 @@ const SocialNetworks = ({ page }) => {
         target='_blank'
       >
         <img
-          src={'/tik.png'}
+          src={'https://raouf-dznm.vercel.app/tik.png'}
           width={page ? 30 : 40}
           height={page ? 30 : 40}
           alt='instgram'
