@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import getData from "../../constans/getData";
 
 const CategoriCard = ({ e, home }) => {
-    const { main_color } = getData
+    const { main_color, textColor } = getData
     return (
         <Link
             style={{
@@ -26,7 +26,8 @@ const CategoriCard = ({ e, home }) => {
                 >{e.name}</p>
                 <p
                     style={{
-                        background: main_color
+                        background: main_color,
+                        color: textColor
                     }}
                     className={`${home ? "p-2.5  mb-5" : "mb-2 py-1 sm:py-2.5"} font-bold w-10/12 mx-auto flex items-center justify-center  uppercase rounded-lg  text-white`}
                 >

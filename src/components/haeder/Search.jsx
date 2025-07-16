@@ -17,7 +17,7 @@ const Search = ({ show, hide }) => {
       className={`${!show ? "hidden  flex-1" : "w-full min-h-[3rem] justify-center"}  sm:flex h-[3rem]   rounded-2xl overflow-hidden`}
     >
       <label
-        className={`${!show ? "sm:w-full md:w-10/12" : "w-full mx-auto"}  rounded-xl bg-[#f3f4f6] flex h-full items-center px-2`}
+        className={`${!show ? "sm:w-full md:w-10/12" : "w-full mx-auto"}  rounded-xl text-black bg-[#f3f4f6] flex h-full items-center px-2`}
         htmlFor='search'
       >
         <IoIosSearch

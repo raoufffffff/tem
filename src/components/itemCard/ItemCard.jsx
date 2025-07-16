@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const ItemCard = ({ item }) => {
   const [isHoverg, setisHoverg] = useState(false)
-  const { main_color } = getData
+  const { main_color, textColor } = getData
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
@@ -47,11 +47,12 @@ const ItemCard = ({ item }) => {
               {
                 background: main_color,
                 border: `1px solid ${main_color}`,
-                color: "#fff",
+                color: textColor,
               }
               : {
                 border: `1px solid ${main_color}`,
                 color: main_color,
+
               }
           }
 

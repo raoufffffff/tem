@@ -24,7 +24,7 @@ const Menu = () => {
 
                     <div
                         onClick={hide}
-                        className='fixed top-0 z-50 left-0 w-full items-end sm:justify-center sm:items-center md:justify-start flex h-full bg-[#7777]'
+                        className='fixed text-black top-0 z-50 left-0 w-full items-end sm:justify-center sm:items-center md:justify-start flex h-full bg-[#7777]'
                     >
                         <motion.nav
                             initial={{ y: 1000 }}

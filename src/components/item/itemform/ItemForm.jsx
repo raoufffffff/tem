@@ -1,5 +1,5 @@
 // ItemForm.jsx
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import states from "../../../constans/states";
@@ -7,7 +7,7 @@ import etat from "../../../constans/etat";
 import getData from "../../../constans/getData";
 
 const ItemForm = ({ item }) => {
-    const { main_color, id } = getData;
+    const { main_color, id, textColor } = getData;
     const navigate = useNavigate();
     const formRef = useRef(null);
     const inputRef = useRef(null);
@@ -23,6 +23,7 @@ const ItemForm = ({ item }) => {
         name: "",
         phone: "",
         state: "",
+        stateNumber: "0",
         city: "",
         ride: 0,
         item: item,
@@ -30,21 +31,8 @@ const ItemForm = ({ item }) => {
         price: item.price,
         home: true,
     });
-    const [scrollY, setScrollY] = useState(window.scrollY);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrollY(window.scrollY);
-        };
 
-        // Add scroll listener
-        window.addEventListener('scroll', handleScroll);
-
-        // Cleanup on unmount
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
 
     const scrollToForm = () => {
         formRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -67,6 +55,7 @@ const ItemForm = ({ item }) => {
         });
         setUser({
             ...user,
+            stateNumber: selectedStateObj.code,
             state: selectedState,
             ride: selectedStateObj?.prix_initial || 0,
         });
@@ -114,11 +103,12 @@ const ItemForm = ({ item }) => {
     };
 
     const totalPrice = (user.price * user.q) + (user.home ? Livrition.home : Livrition.beru);
+    console.log(user.stateNumber);
 
     return (
         <>
-            <div ref={formRef} className="mx-auto w-full sm:w-full mt-10 rounded-lg border-2 p-5 font-[Cairo] text-right" style={{ borderColor: main_color }}>
-                <h2 className="text-center font-bold" style={{ color: main_color }}>
+            <div ref={formRef} className="mx-auto w-full sm:w-full mt-10 rounded-lg border-2 p-5 font-[Cairo] text-right" >
+                <h2 className="text-center font-bold" >
                     املأ النموذج لإتمام الطلب
                 </h2>
 
@@ -178,7 +168,7 @@ const ItemForm = ({ item }) => {
                     </div>
                 </div>
 
-                <h3 className="mt-6 font-bold" style={{ color: main_color }}>مكان التوصيل</h3>
+                <h3 className="mt-6 font-bold" >مكان التوصيل</h3>
 
                 <div className="mt-2 space-y-2">
                     <DeliveryOption
@@ -233,20 +223,26 @@ const ItemForm = ({ item }) => {
                 <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="w-full mt-6 p-3 font-bold rounded-xl text-white"
-                    style={{ backgroundColor: main_color }}
+                    className="w-full mt-6 p-3 font-bold rounded-xl "
+                    style={{
+                        backgroundColor: main_color,
+                        color: textColor
+                    }}
                 >
                     {isSubmitting ? "جاري المعالجة..." : "اطلب الآن"}
                 </button>
             </div>
 
-            {(scrollY < 300 || scrollY > 800) && <button
+            <button
+                style={{
+                    background: main_color,
+                    color: textColor,
+                }}
                 onClick={scrollToForm}
-                className="fixed bottom-4 right-4 left-4 md:right-10 md:left-auto font-bold py-3 px-6 rounded-xl text-white z-40"
-                style={{ backgroundColor: main_color }}
+                className="fixed bottom-4 right-4 left-4 md:right-10 md:left-auto font-bold py-3 px-6 rounded-xl z-40"
             >
                 اشترِ الآن
-            </button>}
+            </button>
         </>
     );
 };
