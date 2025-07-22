@@ -1,5 +1,5 @@
 import data from '../config.json'
-const { email, facebook, instgarm, logo, main_color, phone, store_name, tiktok, id } = data
+const { email, facebook, instgarm, logo, main_color, phone, store_name, tiktok, id, tiktokP } = data
 const getTextColorForBackground = (hexColor) => {
     hexColor = hexColor.replace('#', '');
     const r = parseInt(hexColor.substring(0, 2), 16);
@@ -29,4 +29,4 @@ const lightenHexColor = (hex, percent = 30) => {
 
 const secondColor = lightenHexColor(main_color)
 const textColor = getTextColorForBackground(main_color);
-export default { email, facebook, secondColor, instgarm, logo, main_color, phone, store_name, tiktok, id, textColor } 
+export default { email, facebook, secondColor, instgarm, logo, main_color, phone, store_name, tiktok, id, textColor, tiktokP } 

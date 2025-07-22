@@ -4,7 +4,7 @@ import ReactPixel from 'react-facebook-pixel';
 import ItemForm from "../components/item/itemform/ItemForm";
 import ItemImages from "../components/item/itemimgs/ItemImages";
 import items from '../item.json'
-import ItemImagesMd from "../components/item/itemimgs/ItemImagesMd";
+import axios from "axios";
 // Prevent Pixel re-initialization on every route change
 let pixelInitialized = false;
 
@@ -12,6 +12,14 @@ const Item = () => {
     const { id } = useParams();
     const item = items.find(e => e._id === id)
     useEffect(() => {
+        const getiyem = async () => {
+            await axios.get(`https://true-fit-dz-api.vercel.app/item/${id}`)
+                .then(res => {
+                    console.log(res.data);
+
+                })
+        }
+        getiyem()
         window.scrollTo({
             top: 0,
             behavior: "smooth"

@@ -3,7 +3,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import states from "../../../constans/states.json";
 import etat from "../../../constans/etat";
+import ReactPixel from 'react-facebook-pixel';
 import getData from "../../../constans/getData";
+import { trackTikTokEvent } from '../../../utility/tiktokPixel';
 
 const ItemForm = ({ item }) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -31,6 +33,8 @@ const ItemForm = ({ item }) => {
         price: item.price,
         home: true,
     });
+
+    const totalPrice = (user.price * user.q) + (user.home ? Livrition.home : Livrition.beru);
 
     const scrollToForm = () => {
         formRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -77,8 +81,24 @@ const ItemForm = ({ item }) => {
         return Object.keys(newErrors).length === 0;
     };
 
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsFormVisible(entry.isIntersecting);
+            },
+            { threshold: 0.1 }
+        );
+
+        if (formRef.current) observer.observe(formRef.current);
+
+        return () => {
+            if (formRef.current) observer.unobserve(formRef.current);
+        };
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (!validateForm()) {
             scrollToForm();
             return;
@@ -87,7 +107,29 @@ const ItemForm = ({ item }) => {
         setIsSubmitting(true);
         try {
             const response = await axios.post(`https://true-fit-dz-api.vercel.app/order`, user);
+
             if (response.data.good) {
+                // ✅ TikTok Pixel
+                trackTikTokEvent('CompletePayment', {
+                    value: totalPrice,
+                    currency: 'DZD',
+                    content_type: 'product',
+                    content_name: item.name,
+                });
+
+                // ✅ Facebook Pixel fallback init (in case not done yet)
+                if (!window.fbq && item.Fpixal) {
+                    ReactPixel.init(item.Fpixal);
+                }
+
+                // ✅ Facebook Purchase event
+                ReactPixel.track('Purchase', {
+                    value: totalPrice,
+                    currency: 'DZD',
+                    content_name: item.name,
+                    content_type: 'product',
+                });
+
                 navigate("/thanks");
             } else {
                 setErrors({ submit: "حدث خطأ أثناء إرسال الطلب" });
@@ -100,39 +142,14 @@ const ItemForm = ({ item }) => {
         }
     };
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsFormVisible(entry.isIntersecting);
-            },
-            {
-                threshold: 0.1, // Trigger when 10% of the form is visible
-            }
-        );
-
-        if (formRef.current) {
-            observer.observe(formRef.current);
-        }
-
-        return () => {
-            if (formRef.current) {
-                observer.unobserve(formRef.current);
-            }
-        };
-    }, []);
-
-    const totalPrice = (user.price * user.q) + (user.home ? Livrition.home : Livrition.beru);
-
     return (
         <>
             <div className="w-full text-center mt-6">
                 <h1 className="text-3xl font-extrabold text-base-content">{item.name}</h1>
+                {item.lanImg && <img className="my-3 mx-auto max-h-screen" src={item.lanImg} />}
             </div>
 
-            <div
-                ref={formRef}
-                className="w-full sm:w-[95%] md:w-[80%] lg:w-[60%] mx-auto mt-10 p-8 rounded-2xl shadow-2xl border border-base-700 bg-base-100 font-[Cairo]"
-            >
+            <div ref={formRef} className="w-full sm:w-[95%] md:w-[80%] lg:w-[60%] mx-auto mt-10 p-8 rounded-2xl shadow-2xl border border-base-700 bg-base-100 font-[Cairo]">
                 <h2 className="text-center text-2xl font-bold text-base-content">املأ النموذج لإتمام الطلب</h2>
                 {errors.submit && <p className="text-error text-center mt-2">{errors.submit}</p>}
 
@@ -280,19 +297,19 @@ const ItemForm = ({ item }) => {
                 </form>
             </div>
 
-            {/* وصف إضافي */}
             <div className="text-center mt-10 text-base-content font-[Cairo]">
                 <p>{item.sTitel}</p>
             </div>
 
-            {/* زر اشترِ الآن */}
-            {!isFormVisible && <button
-                onClick={scrollToForm}
-                className="fixed bottom-4 right-4 left-4 md:right-10 md:left-auto btn font-bold shadow-lg z-50"
-                style={{ backgroundColor: main_color, color: textColor }}
-            >
-                اشترِ الآن
-            </button>}
+            {!isFormVisible && (
+                <button
+                    onClick={scrollToForm}
+                    className="fixed bottom-4 right-4 left-4 md:right-10 md:left-auto btn font-bold shadow-lg z-50"
+                    style={{ backgroundColor: main_color, color: textColor }}
+                >
+                    اشترِ الآن
+                </button>
+            )}
         </>
     );
 };
@@ -319,6 +336,5 @@ const DeliveryOption = ({ label, selected, price, onClick, secondColor }) => (
         <span className="font-bold text-base">{price} دج</span>
     </div>
 );
-
 
 export default ItemForm;
