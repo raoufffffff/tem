@@ -8,7 +8,6 @@ import getData from './constans/getData';
 function App() {
   const { tiktokP } = getData
   useEffect(() => {
-    console.log("hello");
     if (tiktokP) {
       initTikTokPixel(tiktokP); // Replace with your real Pixel ID
     }

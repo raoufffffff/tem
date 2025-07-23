@@ -1,8 +1,12 @@
-import React from 'react';
+import { useEffect } from 'react';
 import getData from '../constans/getData';
 
 const Thanks = () => {
     const { main_color, phone, logo } = getData;
+    useEffect(() => {
+        // Scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, [])
 
     return (
         <div

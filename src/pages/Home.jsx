@@ -4,7 +4,7 @@ import Categories from "../components/categories/Categories";
 export default function Home() {
     return (
         <div
-            className="w-full px-5 my-2"
+            className="w-full px-1 my-2"
         >
 
 
